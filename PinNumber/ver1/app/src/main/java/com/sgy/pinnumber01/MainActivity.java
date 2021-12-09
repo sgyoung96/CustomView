@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,7 +25,9 @@ public class MainActivity extends AppCompatActivity {
         binding.viewPinNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Toast.makeText(MainActivity.this, "예에", Toast.LENGTH_SHORT).show();
+                if (binding.viewPinNumber.getNumber().equals(pw)) {
+                    goHomeActivity();
+                }
             }
         });
     }

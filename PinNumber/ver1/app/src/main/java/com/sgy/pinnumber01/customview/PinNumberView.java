@@ -17,6 +17,8 @@ import com.sgy.pinnumber01.MainActivity;
 import com.sgy.pinnumber01.R;
 import com.sgy.pinnumber01.databinding.LayoutPinNumberBinding;
 
+import java.util.ArrayList;
+
 public class PinNumberView extends ConstraintLayout {
 
     private LayoutPinNumberBinding binding = null;
@@ -32,12 +34,8 @@ public class PinNumberView extends ConstraintLayout {
     public Group group_number;
     public ConstraintLayout vg_pin;
     public ConstraintLayout vg_number;
-    public ImageView pin_01;
-    public ImageView pin_02;
-    public ImageView pin_03;
-    public ImageView pin_04;
-    public ImageView pin_05;
-    public ImageView pin_06;
+
+    public ArrayList<ImageView> pinLst = new ArrayList<>();
     public TextView number_01;
     public TextView number_02;
     public TextView number_03;
@@ -79,12 +77,6 @@ public class PinNumberView extends ConstraintLayout {
         group_number = binding.groupNumber;
         vg_pin = binding.vgPin;
         vg_number = binding.vgNumber;
-        pin_01 = binding.pin01;
-        pin_02 = binding.pin02;
-        pin_03 = binding.pin03;
-        pin_04 = binding.pin04;
-        pin_05 = binding.pin05;
-        pin_06 = binding.pin06;
         number_01 = binding.number01;
         number_02 = binding.number02;
         number_03 = binding.number03;
@@ -97,6 +89,13 @@ public class PinNumberView extends ConstraintLayout {
         number_0 = binding.number0;
         number_blank = binding.numberBlank;
         number_back = binding.numberBack;
+
+        pinLst.add(binding.pin01);
+        pinLst.add(binding.pin02);
+        pinLst.add(binding.pin03);
+        pinLst.add(binding.pin04);
+        pinLst.add(binding.pin05);
+        pinLst.add(binding.pin06);
 
         vg_number = findViewById(R.id.vg_number);
 
@@ -145,63 +144,19 @@ public class PinNumberView extends ConstraintLayout {
                 return;
             }
 
-            if (count == 1) { // 이미지 리소스 바꿔주기
-                binding.pin01.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin02.setImageResource(R.drawable.icon_star_black);
-                binding.pin03.setImageResource(R.drawable.icon_star_black);
-                binding.pin04.setImageResource(R.drawable.icon_star_black);
-                binding.pin05.setImageResource(R.drawable.icon_star_black);
-                binding.pin06.setImageResource(R.drawable.icon_star_black);
-                isFinished = false;
-            } else if (count == 2) {
-                binding.pin01.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin02.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin03.setImageResource(R.drawable.icon_star_black);
-                binding.pin04.setImageResource(R.drawable.icon_star_black);
-                binding.pin05.setImageResource(R.drawable.icon_star_black);
-                binding.pin06.setImageResource(R.drawable.icon_star_black);
-                isFinished = false;
-            } else if (count == 3) {
-                binding.pin01.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin02.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin03.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin04.setImageResource(R.drawable.icon_star_black);
-                binding.pin05.setImageResource(R.drawable.icon_star_black);
-                binding.pin06.setImageResource(R.drawable.icon_star_black);
-                isFinished = false;
-            } else if (count == 4) {
-                binding.pin01.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin02.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin03.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin04.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin05.setImageResource(R.drawable.icon_star_black);
-                binding.pin06.setImageResource(R.drawable.icon_star_black);
-                isFinished = false;
-            } else if (count == 5) {
-                binding.pin01.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin02.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin03.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin04.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin05.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin06.setImageResource(R.drawable.icon_star_black);
-                isFinished = false;
-            } else if (count == 6) {
-                binding.pin01.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin02.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin03.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin04.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin05.setImageResource(R.drawable.icon_star_yellow);
-                binding.pin06.setImageResource(R.drawable.icon_star_yellow);
-                isFinished = true;
-//                main.goHomeActivity();
-            } else if (count == 0) { // 초기 상태 or back 키로 입력값이 하나도 없을 때
-                binding.pin01.setImageResource(R.drawable.icon_star_black);
-                binding.pin02.setImageResource(R.drawable.icon_star_black);
-                binding.pin03.setImageResource(R.drawable.icon_star_black);
-                binding.pin04.setImageResource(R.drawable.icon_star_black);
-                binding.pin05.setImageResource(R.drawable.icon_star_black);
-                binding.pin06.setImageResource(R.drawable.icon_star_black);
-                isFinished = false;
+            int yellow = R.drawable.icon_star_yellow;
+            int black = R.drawable.icon_star_black;
+
+            isFinished = false;
+
+            for(int i = 0; i < pinLst.size(); i++) {
+                pinLst.get(i).setImageResource(yellow);
+                if((count-1) < i) {
+                    pinLst.get(i).setImageResource(black);
+                    if((count) == pinLst.size()) {
+                        isFinished = true;
+                    }
+                }
             }
         }
     }
