@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "PinNumber01"
 include ':app'
+include ':pinNumber'
