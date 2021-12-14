@@ -72,24 +72,6 @@ public class PinNumberView extends ConstraintLayout {
     private void initView(Context context, AttributeSet attributeSet) {
         binding = LayoutPinNumberBinding.inflate(LayoutInflater.from(context), this, true);
 
-        /* init views - findViewById 사용 x */
-        group_pin = binding.groupPin;
-        group_number = binding.groupNumber;
-        vg_pin = binding.vgPin;
-        vg_number = binding.vgNumber;
-        number_01 = binding.number01;
-        number_02 = binding.number02;
-        number_03 = binding.number03;
-        number_04 = binding.number04;
-        number_05 = binding.number05;
-        number_06 = binding.number06;
-        number_07 = binding.number07;
-        number_08 = binding.number08;
-        number_09 = binding.number09;
-        number_0 = binding.number0;
-        number_blank = binding.numberBlank;
-        number_back = binding.numberBack;
-
         pinLst.add(binding.pin01);
         pinLst.add(binding.pin02);
         pinLst.add(binding.pin03);
@@ -97,25 +79,13 @@ public class PinNumberView extends ConstraintLayout {
         pinLst.add(binding.pin05);
         pinLst.add(binding.pin06);
 
-        vg_number = findViewById(R.id.vg_number);
-
         if (attributeSet != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.PinNumberView);
             count = typedArray.getInteger(0, 0);
-//            mNumber = typedArray.getString(0);
             typedArray.recycle();
             setPinNumber();
         }
     }
-
-//    @Override
-//    protected void onFinishInflate() { // view 가 로딩(?)이 완료됐을 때
-//        super.onFinishInflate();
-//        setPinNumber();
-//        setSelected(count, true);
-//        setPinNumber();
-//    }
-
 
     public void setSelected(int select) {
         setSelected(select, false);
@@ -149,6 +119,7 @@ public class PinNumberView extends ConstraintLayout {
 
             isFinished = false;
 
+            /* ImageView 하드코딩 막도록 사용 */
             for(int i = 0; i < pinLst.size(); i++) {
                 pinLst.get(i).setImageResource(yellow);
                 if((count-1) < i) {
@@ -162,196 +133,6 @@ public class PinNumberView extends ConstraintLayout {
     }
 
     private String setPinNumber() {
-        if (mNumber.length() > 6) {
-            mNumber = "";
-            count = 0;
-        } else {
-            binding.number0.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mNumber.length() < 6) {
-                        mNumber = mNumber + "0";
-                        count++;
-                        setSelected(count, false);
-                    } else if (mNumber.length() == 6) {
-                        mNumber = mNumber;
-                        count = count;
-                        setSelected(count, false);
-                    } else {
-                        return;
-                    }
-                }
-            });
-            binding.number01.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mNumber.length() < 6) {
-                        mNumber = mNumber + "1";
-                        count++;
-                        setSelected(count, true);
-                    } else if (mNumber.length() == 6) {
-                        mNumber = mNumber;
-                        count = count;
-                        setSelected(count, true);
-                    } else {
-                        return;
-                    }
-                }
-            });
-            binding.number02.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mNumber.length() < 6) {
-                        mNumber = mNumber + "2";
-                        count++;
-                        setSelected(count, true);
-                    } else if (mNumber.length() == 6) {
-                        mNumber = mNumber;
-                        count = count;
-                        setSelected(count, true);
-                    } else {
-                        return;
-                    }
-                }
-            });
-            binding.number03.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mNumber.length() < 6) {
-                        mNumber = mNumber + "3";
-                        count++;
-                        setSelected(count, true);
-                    } else if (mNumber.length() == 6) {
-                        mNumber = mNumber;
-                        count = count;
-                        setSelected(count, true);
-                    } else {
-                        return;
-                    }
-                }
-            });
-            binding.number04.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mNumber.length() < 6) {
-                        mNumber = mNumber + "4";
-                        count++;
-                        setSelected(count, true);
-                    } else if (mNumber.length() == 6) {
-                        mNumber = mNumber;
-                        count = count;
-                        setSelected(count, true);
-                    } else {
-                        return;
-                    }
-                }
-            });
-            binding.number05.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mNumber.length() < 6) {
-                        mNumber = mNumber + "5";
-                        count++;
-                        setSelected(count, true);
-                    } else if (mNumber.length() == 6) {
-                        mNumber = mNumber;
-                        count = count;
-                        setSelected(count, true);
-                    } else {
-                        return;
-                    }
-                }
-            });
-            binding.number06.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mNumber.length() < 6) {
-                        mNumber = mNumber + "6";
-                        count++;
-                        setSelected(count, true);
-                    } else if (mNumber.length() == 6) {
-                        mNumber = mNumber;
-                        count = count;
-                        setSelected(count, true);
-                    } else {
-                        return;
-                    }
-                }
-            });
-            binding.number07.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mNumber.length() < 6) {
-                        mNumber = mNumber + "7";
-                        count++;
-                        setSelected(count, true);
-                    } else if (mNumber.length() == 6) {
-                        mNumber = mNumber;
-                        count = count;
-                        setSelected(count, true);
-                    } else {
-                        return;
-                    }
-                }
-            });
-            binding.number08.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mNumber.length() < 6) {
-                        mNumber = mNumber + "8";
-                        count++;
-                        setSelected(count, true);
-                    } else if (mNumber.length() == 6) {
-                        mNumber = mNumber;
-                        count = count;
-                        setSelected(count, true);
-                    } else {
-                        return;
-                    }
-                }
-            });
-            binding.number09.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mNumber.length() < 6) {
-                        mNumber = mNumber + "9";
-                        count++;
-                        setSelected(count, true);
-                    } else if (mNumber.length() == 6) {
-                        mNumber = mNumber;
-                        count = count;
-                        setSelected(count, true);
-                    } else {
-                        return;
-                    }
-                }
-            });
-            binding.numberBlank.setOnClickListener(new View.OnClickListener() { // 동작이 없으므로 추후 삭제 (클릭 리스너를 안 달면 됨)
-                @Override
-                public void onClick(View v) {
-                    return;
-                }
-            });
-            binding.numberBack.setOnClickListener(new View.OnClickListener() { // String index out of range: -1
-                @Override
-                public void onClick(View v) {
-                    if (mNumber.length() >= 2) { // 두칸이 되기 전까지 다음 로직
-                        count--;
-                        mNumber = mNumber.substring(0, mNumber.length() - 1);
-                        setSelected(count, true);
-                    } else if (mNumber.length() == 1) { // 한칸일 때 count = 0 으로
-                        count--;
-                        mNumber = "";
-                        setSelected(count, true);
-                    } else if (mNumber.length() == 0) {
-                        count = 0;
-                        mNumber = "";
-                        setSelected(count, true);
-                    }
-                }
-            });
-        }
-
-        return mNumber;
+        return "";
     }
 }
