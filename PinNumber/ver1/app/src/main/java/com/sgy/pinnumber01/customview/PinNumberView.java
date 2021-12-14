@@ -1,11 +1,16 @@
 package com.sgy.pinnumber01.customview;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,39 +20,22 @@ import androidx.constraintlayout.widget.Group;
 
 import com.sgy.pinnumber01.MainActivity;
 import com.sgy.pinnumber01.R;
+import com.sgy.pinnumber01.contract.PinNumberListener;
 import com.sgy.pinnumber01.databinding.LayoutPinNumberBinding;
 
 import java.util.ArrayList;
 
 public class PinNumberView extends ConstraintLayout {
 
-    private LayoutPinNumberBinding binding = null;
-    private int count = 0;
-    private String mNumber = "";
-    private boolean isFinished = false;
+    public LayoutPinNumberBinding binding = null;
+    private int count = 0;                  // 몇번 눌렀는지 체크
+    private String mNumber = "";            // 입력값 String +
+    private boolean isFinished = false;     // 입력이 완료되었는지에 대한 체크
 
-    /* intent 시킬 변수 */
-    private MainActivity main = new MainActivity();
+    public ArrayList<ImageView> pinLst = new ArrayList<>(); // pin 이미지 담는 array
+    public boolean isFocused = false;       // EditText(pin input 값)에 포커스 되었는지 체크
 
-    /* PinNumberView 에 선언한 xml 요소들 초기화 */
-    public Group group_pin;
-    public Group group_number;
-    public ConstraintLayout vg_pin;
-    public ConstraintLayout vg_number;
-
-    public ArrayList<ImageView> pinLst = new ArrayList<>();
-    public TextView number_01;
-    public TextView number_02;
-    public TextView number_03;
-    public TextView number_04;
-    public TextView number_05;
-    public TextView number_06;
-    public TextView number_07;
-    public TextView number_08;
-    public TextView number_09;
-    public TextView number_0;
-    public TextView number_blank;
-    public TextView number_back;
+    private MainActivity main;              // 실제 동작시킬 액티비티
 
     public PinNumberView(Context context) {
         super(context);
@@ -83,56 +71,86 @@ public class PinNumberView extends ConstraintLayout {
             TypedArray typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.PinNumberView);
             count = typedArray.getInteger(0, 0);
             typedArray.recycle();
-            setPinNumber();
+            setPinNumberInput();
         }
     }
 
-    public void setSelected(int select) {
-        setSelected(select, false);
+    /**
+     * 사용자가 입력한 키보드 값(pin 숫자 문자열 반환)
+     *
+     * @return
+     */
+    public String getPinNumber() {
+        return mNumber;
     }
 
-    public int getSelected() {
-        return count;
+    private void setPinNumber(String mNumber) {
+        this.mNumber = mNumber;
     }
 
-    public String getNumber() {
-        return setPinNumber();
-    }
-
-    public void setFinished(boolean isFinish) {
-
-    }
-
+    /**
+     * 사용자가 입력을 완료했는지 가져오는 값
+     *
+     * @return
+     */
     public boolean getFinished() {
         return isFinished;
     }
 
-    private void setSelected(int select, boolean force) {
-        if (force || count != select) {
-            if (count < 0 || count > 6) {
-                count = 0;
-                return;
-            }
+    /**
+     * 문자열의 길이가 6개인지(사용자 입력이 완료되었는지) 확인
+     *
+     * @param isFinish
+     */
+    public void setFinished(boolean isFinish) {
+        this.isFinished = isFinish;
+    }
 
-            int yellow = R.drawable.icon_star_yellow;
-            int black = R.drawable.icon_star_black;
+    /**
+     * 사용자 입력값에 따라서 pin 이미지 변화
+     */
+    public void setPinSelected() {
+        int yellow = R.drawable.icon_star_yellow;
+        int black = R.drawable.icon_star_black;
 
-            isFinished = false;
-
-            /* ImageView 하드코딩 막도록 사용 */
-            for(int i = 0; i < pinLst.size(); i++) {
-                pinLst.get(i).setImageResource(yellow);
-                if((count-1) < i) {
-                    pinLst.get(i).setImageResource(black);
-                    if((count) == pinLst.size()) {
-                        isFinished = true;
-                    }
-                }
+        /* ImageView 하드코딩 막도록 사용 */
+        for (int i = 0; i < pinLst.size(); i++) {
+            pinLst.get(i).setImageResource(yellow);
+            if ((binding.etPin.getText().length() - 1) < i) {
+                pinLst.get(i).setImageResource(black);
             }
         }
     }
 
-    private String setPinNumber() {
-        return "";
+    /**
+     * Pin 번호 입력 시마다 호출하는 함수 (실시간 체크)
+     */
+    private void setPinNumberInput() {
+        binding.etPin.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                setPinNumber(binding.etPin.getText().toString());
+                setPinSelected();
+                if (binding.etPin.getText().length() == pinLst.size()) {
+                    setFinished(true);
+                } else {
+                    if (binding.etPin.getText().length() > 6) {
+                        binding.etPin.setText("");
+                        setFinished(false);
+                    }
+                    setFinished(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 }

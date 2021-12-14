@@ -6,6 +6,26 @@
     android:layout_gravity="center"
     app:layout_constraintWidth_percent="0.5">
 
+    <EditText
+        android:id="@+id/et_pin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
+        android:cursorVisible="false"
+        android:inputType="numberPassword"
+        android:focusable="true"
+        android:textColor="#00000000"
+        app:layout_constraintTop_toTopOf="@id/vg_pin"
+        app:layout_constraintStart_toStartOf="@id/vg_pin"
+        app:layout_constraintEnd_toEndOf="@id/vg_pin"
+        app:layout_constraintBottom_toBottomOf="@id/vg_pin" >
+
+        <requestFocus />
+
+    </EditText>
+
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group_pin"
         android:layout_width="wrap_content"
@@ -95,15 +115,5 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <EditText
-        android:id="@+id/et_pin"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:layout_constraintTop_toTopOf="@id/vg_pin"
-        app:layout_constraintStart_toStartOf="@id/vg_pin"
-        app:layout_constraintEnd_toEndOf="@id/vg_pin"
-        app:layout_constraintBottom_toBottomOf="@id/vg_pin"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
