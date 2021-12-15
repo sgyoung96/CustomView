@@ -1,26 +1,16 @@
 package com.sgy.pinnumber01.customview;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.TypedArray;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.Group;
 
-import com.sgy.pinnumber01.MainActivity;
 import com.sgy.pinnumber01.R;
-import com.sgy.pinnumber01.contract.PinNumberListener;
 import com.sgy.pinnumber01.databinding.LayoutPinNumberBinding;
 
 import java.util.ArrayList;
@@ -33,9 +23,6 @@ public class PinNumberView extends ConstraintLayout {
     private boolean isFinished = false;     // 입력이 완료되었는지에 대한 체크
 
     public ArrayList<ImageView> pinLst = new ArrayList<>(); // pin 이미지 담는 array
-    public boolean isFocused = false;       // EditText(pin input 값)에 포커스 되었는지 체크
-
-    private MainActivity main;              // 실제 동작시킬 액티비티
 
     public PinNumberView(Context context) {
         super(context);
@@ -52,11 +39,6 @@ public class PinNumberView extends ConstraintLayout {
         initView(context, attrs);
     }
 
-    public PinNumberView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initView(context, attrs);
-    }
-
     private void initView(Context context, AttributeSet attributeSet) {
         binding = LayoutPinNumberBinding.inflate(LayoutInflater.from(context), this, true);
 
@@ -68,9 +50,6 @@ public class PinNumberView extends ConstraintLayout {
         pinLst.add(binding.pin06);
 
         if (attributeSet != null) {
-            TypedArray typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.PinNumberView);
-            count = typedArray.getInteger(0, 0);
-            typedArray.recycle();
             setPinNumberInput();
         }
     }
